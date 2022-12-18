@@ -1,0 +1,57 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "outDir": "./",
+        "noEmit": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "./@types/"
+        ],
+        "rootDir": "./",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "allowJs": true,
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "incremental": true,
+        "lib": [
+            "DOM",
+            "ES2022"
+        ],
+        "jsx": "react",
+        "skipLibCheck": true,
+        "strictBindCallApply": true,
+        "pretty": true,
+        "noImplicitReturns": false,
+        "baseUrl": "./",
+        "paths": {
+            "src/*": [
+                "./src/*"
+            ],
+            "webpack/*": [
+                "./webpack/*"
+            ],
+        },
+        "noImplicitThis": true,
+        "noImplicitAny": false,
+        "strictNullChecks": true,
+        "forceConsistentCasingInFileNames": true,
+    },
+    "include": [
+        "src/**/*",
+        "webpack/**/*",
+        "@types/**/*",
+    ],
+    "exclude": [
+        "node_modules",
+        "**/.*/",
+        "build",
+        "dist",
+    ],
+    "references": [
+        {
+            "path": "./src/tsconfig.extension.json"
+        }
+    ]
+}
