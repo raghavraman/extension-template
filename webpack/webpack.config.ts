@@ -2,15 +2,17 @@ import { Configuration, EntryObject } from 'webpack';
 import path from 'path';
 import { moduleResolutionPlugins } from './plugins/moduleResolutionPlugins';
 import loaders from './loaders';
+import { getBuildPlugins } from './plugins/buildProcessPlugins';
 
-interface Entries {
+export interface Entries {
     content: string[];
     background: string[];
     popup: string[];
-    // these entries are only used in development
+    // only used in development
     debug?: string[];
-    hotReload?: string[];
 }
+
+export type EntryId = keyof Entries;
 
 /**
  * This function will generate the webpack configuration for the extension
@@ -21,6 +23,7 @@ interface Entries {
 export default function config(mode: Environment, manifest: chrome.runtime.ManifestV3): Configuration {
     const outDirectory = path.resolve('build');
 
+    // the entry points for the extension (the files that webpack will start bundling from)
     const entry: Entries = {
         content: [path.resolve('src', 'views', 'content', 'content')],
         background: [path.resolve('src', 'background', 'background')],
@@ -28,11 +31,12 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
     };
 
     if (mode === 'development') {
-        entry.debug = [path.resolve('src', 'debug', 'debug')];
-        entry.hotReload = [path.resolve('src', 'hotReload')];
+        entry.debug = [path.resolve('src', 'debug')];
         entry.content.unshift(path.resolve('src', 'reactDevToolsActiveTab'));
         entry.popup.unshift(path.resolve('src', 'reactDevToolsActiveTab'));
     }
+
+    const htmlEntries: EntryId[] = ['popup', 'debug'];
 
     /** @see https://webpack.js.org/configuration for documentation */
     const config: Configuration = {
@@ -70,6 +74,8 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
             chunkLoadingGlobal: `webpackJsonp${manifest.short_name}`,
             globalObject: 'this',
         },
+        // this is where we define the plugins that webpack will use
+        plugins: getBuildPlugins(mode, htmlEntries, manifest),
     };
 
     return config;
