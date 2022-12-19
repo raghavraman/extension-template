@@ -1,6 +1,6 @@
 import path from 'path';
 import dotenv from 'dotenv';
-import { CleanPlugin, DefinePlugin, ProgressPlugin, ProvidePlugin, webpack, WebpackPluginInstance } from 'webpack';
+import { DefinePlugin, ProgressPlugin, ProvidePlugin, webpack, WebpackPluginInstance } from 'webpack';
 import { Entries, EntryId } from 'webpack/webpack.config';
 import CreateFileWebpack from 'create-file-webpack';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
@@ -9,13 +9,14 @@ import WebpackBuildNotifierPlugin from 'webpack-build-notifier';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import TypeErrorNotifierPlugin from './custom/TypeErrorNotifierPlugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manifest: chrome.runtime.ManifestV3) {
     let plugins: WebpackPluginInstance[] = [];
 
     // clean the build directory before each build
-    plugins.push(new CleanPlugin());
+    plugins.push(new CleanWebpackPlugin());
 
     // show the progress of the build
     plugins.push(new ProgressPlugin());
