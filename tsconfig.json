@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "ES2022",
+        "target": "ES2021",
         "outDir": "./",
         "noEmit": true,
         "typeRoots": [
@@ -17,7 +17,7 @@
         "incremental": true,
         "lib": [
             "DOM",
-            "ES2022"
+            "ES2021"
         ],
         "jsx": "react",
         "skipLibCheck": true,
@@ -50,9 +50,4 @@
         "build",
         "dist",
     ],
-    "references": [
-        {
-            "path": "./src/tsconfig.extension.json"
-        }
-    ]
 }

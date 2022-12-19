@@ -32,8 +32,8 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
 
     if (mode === 'development') {
         entry.debug = [path.resolve('src', 'debug')];
-        entry.content.unshift(path.resolve('src', 'reactDevToolsActiveTab'));
-        entry.popup.unshift(path.resolve('src', 'reactDevToolsActiveTab'));
+        // entry.content.unshift(path.resolve('src', 'reactDevToolsActiveTab'));
+        // entry.popup.unshift(path.resolve('src', 'reactDevToolsActiveTab'));
     }
 
     const htmlEntries: EntryId[] = ['popup', 'debug'];

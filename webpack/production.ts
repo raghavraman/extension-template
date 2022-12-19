@@ -15,19 +15,21 @@ const semanticVersion = process.env.SEMANTIC_VERSION || packageJson.version;
 const manifestVersion = convertSemver(semanticVersion);
 const manifest = getManifest(mode, manifestVersion);
 
-console.log(info(`${manifest.name} v${manifest.version} ${mode} build starting...`));
+console.log(info(`${manifest.short_name} v${manifest.version} ${mode} build starting...`));
 
 // kick off the webpack build
 webpack(config(mode, manifest), async error => {
-    if (error) {
-        return onBuildFailure(error);
+    if (!error) {
+        await onBuildSuccess();
+        process.exit(0);
     }
-    await onBuildSuccess();
+    await onBuildFailure(error);
+    process.exit(1);
 });
 
 async function onBuildSuccess(): Promise<void> {
     // zip the output directory and put it in the artifacts directory
-    const fileName = `${manifest.name}v${manifestVersion}`;
+    const fileName = `${manifest.short_name} v${manifestVersion}`;
     await zipProductionBuild(fileName);
     console.log(success(`${fileName} built and zipped into build/artifacts/${fileName}.zip!`));
 }

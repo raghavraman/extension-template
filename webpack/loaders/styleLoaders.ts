@@ -14,7 +14,7 @@ function buildStyleLoaders(cssLoaderOptions: Record<string, any>): RuleSetUseIte
             loader: MiniCssExtractPlugin.loader,
         },
         {
-            loader: require.resolve('css-loader'),
+            loader: 'css-loader',
             options: cssLoaderOptions,
         },
     ];

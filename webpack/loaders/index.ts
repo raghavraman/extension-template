@@ -7,7 +7,7 @@ const typescriptLoader: RuleSetRule = {
     loader: 'esbuild-loader',
     options: {
         loader: 'tsx',
-        target: 'es2022',
+        target: 'es2021',
     },
 };
 

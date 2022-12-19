@@ -5,10 +5,11 @@ import { error } from './chalk';
  * @param e the error provided by webpacxk
  */
 export default function printBuildError(e: Error) {
+    console.log('printBuildError -> e', e);
     if (process.env.TSC_COMPILE_ON_ERROR === 'true') {
         printBuildError(e);
     } else {
-        console.log(error('Failed to compile.\n'));
+        // console.log(error('Failed to compile.\n'));
         printBuildError(e);
         process.exit(1);
     }

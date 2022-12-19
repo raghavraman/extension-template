@@ -30,4 +30,7 @@
         "tsconfig.build.json": "tsconfig",
         "tsconfig.test.json": "tsconfig"
     },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
 }

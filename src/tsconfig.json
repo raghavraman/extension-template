@@ -1,10 +1,10 @@
 {
-    "extends": "../tsconfig.base.json",
+    "extends": "../tsconfig.json",
     "compilerOptions": {
         "composite": true,
         "lib": [
             "DOM",
-            "ES2022"
+            "ES2021"
         ],
         "types": [
             "chrome",

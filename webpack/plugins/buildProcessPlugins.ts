@@ -1,6 +1,6 @@
 import path from 'path';
 import dotenv from 'dotenv';
-import { DefinePlugin, ProgressPlugin, ProvidePlugin, webpack, WebpackPluginInstance } from 'webpack';
+import webpack, { WebpackPluginInstance } from 'webpack';
 import { Entries, EntryId } from 'webpack/webpack.config';
 import CreateFileWebpack from 'create-file-webpack';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
@@ -19,7 +19,7 @@ export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manif
     plugins.push(new CleanWebpackPlugin());
 
     // show the progress of the build
-    plugins.push(new ProgressPlugin());
+    plugins.push(new webpack.ProgressPlugin());
 
     // make sure that the paths are case sensitive
     plugins.push(new CaseSensitivePathsPlugin());
@@ -39,6 +39,8 @@ export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manif
                 inject: true,
                 filename: `${entryId}.html`,
                 chunks: [entryId],
+                title: entryId,
+                template: path.resolve('public', 'index.html'),
             })
         );
     }
@@ -87,7 +89,7 @@ export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manif
 
     // define the environment variables that are available within the extension code
     plugins.push(
-        new DefinePlugin({
+        new webpack.DefinePlugin({
             'process.env': {
                 SEMANTIC_VERSION: process.env.SEMANTIC_VERSION,
                 NODE_ENV: mode,
@@ -98,7 +100,7 @@ export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manif
 
     // provide some global nodejs variables so that nodejs libraries can be used
     plugins.push(
-        new ProvidePlugin({
+        new webpack.ProvidePlugin({
             Buffer: ['buffer', 'Buffer'],
             process: 'process/browser',
         })
