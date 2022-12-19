@@ -19,7 +19,7 @@ export function getManifest(mode: Environment, version: string): chrome.runtime.
         version,
         manifest_version: 3,
         // hardcode the key for development builds
-        key: mode === 'development' && process.env.MANIFEST_KEY ? process.env.MANIFEST_KEY : undefined,
+        key: process.env.MANIFEST_KEY,
         host_permissions: ['http://*/*', 'https://*/*'],
         permissions: [
             'storage',
@@ -48,7 +48,6 @@ export function getManifest(mode: Environment, version: string): chrome.runtime.
         ],
         icons: {
             16: `icons/icon_${mode}_16.png`,
-            32: `icons/icon_${mode}_32.png`,
             48: `icons/icon_${mode}_48.png`,
             128: `icons/icon_${mode}_128.png`,
         },
