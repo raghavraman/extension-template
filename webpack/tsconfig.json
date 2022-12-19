@@ -1,6 +1,8 @@
 {
     "extends": "../tsconfig.base.json",
     "compilerOptions": {
+        "module": "esnext",
+        "esModuleInterop": true,
         "composite": true,
         "lib": [
             "DOM",
@@ -9,6 +11,6 @@
         "types": [
             "chrome",
             "node"
-        ]
-    }
+        ],
+    },
 }

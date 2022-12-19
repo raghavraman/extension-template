@@ -4,14 +4,31 @@
     "description": "An opinionated chrome extension boilerplate",
     "private": true,
     "homepage": "sriramhariharan.com",
-    "scripts": {},
+    "type": "module",
+    "scripts": {
+        "build": "tsx webpack/production.ts"
+    },
     "devDependencies": {
+        "@svgr/webpack": "^6.5.1",
         "@types/chrome": "^0.0.204",
         "@types/node": "^18.11.17",
+        "@types/semver": "^7.3.13",
+        "archiver": "^5.3.1",
         "chalk": "^5.2.0",
+        "copy-webpack-plugin": "^11.0.0",
+        "create-file-webpack": "^1.0.2",
+        "css-loader": "^6.7.3",
+        "esbuild-loader": "^2.20.0",
+        "fork-ts-checker-webpack-plugin": "^7.2.14",
+        "mini-css-extract-plugin": "^2.7.2",
         "path": "^0.12.7",
         "prettier": "^2.8.1",
         "react-dev-utils": "^12.0.1",
+        "sass-loader": "^13.2.0",
+        "semver": "^7.3.8",
+        "ts-node": "^10.9.1",
+        "tsconfig-paths-webpack-plugin": "^4.0.0",
+        "tsx": "^3.12.1",
         "typescript": "^4.9.4",
         "webpack": "^5.75.0"
     }

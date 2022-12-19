@@ -22,12 +22,12 @@
         "background": "Delta",
         "navigation": "Routes",
         "logging": "log",
-        "browserAction": "Layout",
+        "popup": "Layout",
         "storage": "Database",
     },
     "material-icon-theme.files.associations": {
         "tsconfig.extension.json": "tsconfig",
         "tsconfig.build.json": "tsconfig",
         "tsconfig.test.json": "tsconfig"
-    }
+    },
 }

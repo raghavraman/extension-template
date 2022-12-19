@@ -42,6 +42,7 @@
         "src/**/*",
         "webpack/**/*",
         "@types/**/*",
+        "./package.json"
     ],
     "exclude": [
         "node_modules",
