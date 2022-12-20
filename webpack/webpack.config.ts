@@ -75,6 +75,10 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
             chunkLoadingGlobal: `webpackJsonp${manifest.short_name}`,
             globalObject: 'this',
         },
+        stats: {
+            errorDetails: true,
+            errorsCount: true,
+        },
         // this is where we define the plugins that webpack will use
         plugins: getBuildPlugins(mode, htmlEntries, manifest),
     };

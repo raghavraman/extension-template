@@ -30,7 +30,7 @@ webpack(config(MODE, manifest), async error => {
 async function onBuildSuccess(): Promise<void> {
     // zip the output directory and put it in the artifacts directory
     const fileName = `${manifest.short_name} v${manifestVersion}`;
-    // await zipProductionBuild(fileName);
+    await zipProductionBuild(fileName);
     console.log(success(`${fileName} built and zipped into build/artifacts/${fileName}.zip!`));
 }
 

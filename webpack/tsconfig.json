@@ -6,7 +6,7 @@
         "composite": true,
         "lib": [
             "DOM",
-            "ES2021"
+            "es2021"
         ],
         "types": [
             "chrome",

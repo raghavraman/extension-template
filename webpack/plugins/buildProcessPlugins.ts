@@ -88,11 +88,11 @@ export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manif
     // define the environment variables that are available within the extension code
     plugins.push(
         new webpack.DefinePlugin({
-            'process.env': {
+            'process.env': JSON.stringify({
                 SEMANTIC_VERSION: process.env.SEMANTIC_VERSION,
                 NODE_ENV: mode,
                 ...dotenv.config({ path: `.env.${mode}` }).parsed,
-            } satisfies typeof process.env,
+            } satisfies typeof process.env),
         })
     );
 

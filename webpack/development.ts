@@ -1,16 +1,18 @@
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import path from 'path';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import config from './webpack.config';
 import { version } from '../package.json';
 import { getManifest } from './manifest.config';
+import { initializeHotReloading } from './plugins/custom/hotReloadServer';
 
 const HOT_RELOAD_PORT = 9090;
 const MODE: Environment = 'production';
 
 const manifest = getManifest(MODE, version);
 const compiler = webpack(config(MODE, manifest));
+
+initializeHotReloading(HOT_RELOAD_PORT, compiler);
 
 const server = new WebpackDevServer(
     {
@@ -35,3 +37,5 @@ const server = new WebpackDevServer(
     },
     compiler
 );
+
+await server.start();
