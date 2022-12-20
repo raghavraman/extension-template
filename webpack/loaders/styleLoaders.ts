@@ -15,7 +15,7 @@ function buildStyleLoaders(cssLoaderOptions: Record<string, any>): RuleSetUseIte
         },
         {
             loader: 'css-loader',
-            options: cssLoaderOptions,
+            options: { ...cssLoaderOptions, sourceMap: false },
         },
     ];
     return loaders;

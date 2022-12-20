@@ -7,7 +7,7 @@ import { getManifest } from './manifest.config';
 import { initializeHotReloading } from './plugins/custom/hotReloadServer';
 
 const HOT_RELOAD_PORT = 9090;
-const MODE: Environment = 'production';
+const MODE: Environment = 'development';
 
 const manifest = getManifest(MODE, version);
 const compiler = webpack(config(MODE, manifest));

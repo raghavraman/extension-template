@@ -42,7 +42,7 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
     /** @see https://webpack.js.org/configuration for documentation */
     const config: Configuration = {
         mode,
-        devtool: mode === 'development' ? 'cheap-module-source-map' : undefined,
+        devtool: 'inline-cheap-module-source-map',
         bail: true,
         cache: true,
         // entry and resolve is what webpack uses for figuring out where to start bundling and how to resolve modules
