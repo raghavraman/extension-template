@@ -3,6 +3,7 @@ import path from 'path';
 import { moduleResolutionPlugins } from './plugins/moduleResolutionPlugins';
 import loaders from './loaders';
 import { getBuildPlugins } from './plugins/buildProcessPlugins';
+import TerserPlugin from 'terser-webpack-plugin';
 
 export interface Entries {
     content: string[];
@@ -77,6 +78,34 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
         // this is where we define the plugins that webpack will use
         plugins: getBuildPlugins(mode, htmlEntries, manifest),
     };
+
+    if (mode === 'production') {
+        config.optimization = {
+            minimize: true,
+            minimizer: [
+                new TerserPlugin({
+                    extractComments: false,
+                    parallel: false,
+                    terserOptions: {
+                        compress: {
+                            ecma: 2020,
+                            drop_console: true,
+                            drop_debugger: true,
+                            comparisons: false,
+                            inline: 2,
+                        },
+                        keep_classnames: false,
+                        keep_fnames: false,
+                        output: {
+                            ecma: 2020,
+                            comments: false,
+                            ascii_only: true,
+                        },
+                    },
+                }),
+            ],
+        };
+    }
 
     return config;
 }
