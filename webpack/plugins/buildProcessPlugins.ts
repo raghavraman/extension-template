@@ -9,14 +9,10 @@ import WebpackBuildNotifierPlugin from 'webpack-build-notifier';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import TypeErrorNotifierPlugin from './custom/TypeErrorNotifierPlugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manifest: chrome.runtime.ManifestV3) {
     let plugins: WebpackPluginInstance[] = [];
-
-    // clean the build directory before each build
-    plugins.push(new CleanWebpackPlugin());
 
     // show the progress of the build
     plugins.push(new webpack.ProgressPlugin());
@@ -36,11 +32,11 @@ export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manif
     for (const entryId of htmlEntries) {
         plugins.push(
             new HTMLWebpackPlugin({
-                inject: true,
+                hash: false,
                 filename: `${entryId}.html`,
                 chunks: [entryId],
-                title: entryId,
-                template: path.resolve('webpack', 'plugins', 'template.hbs'),
+                title: `${manifest.short_name} ${entryId} `,
+                template: path.resolve('webpack', 'plugins', 'template.html'),
             })
         );
     }
