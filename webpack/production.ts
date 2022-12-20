@@ -3,22 +3,22 @@ import formatWebpackMessages from 'react-dev-utils/formatWebpackMessages';
 import config from './webpack.config';
 import { info, success } from './utils/chalk';
 import { getManifest } from './manifest.config';
-import packageJson from '../package.json';
+import { version } from '../package.json';
 import { convertSemver } from './utils/convertSemver';
 import printBuildErrors from './utils/printBuildError';
 import { zipProductionBuild } from './utils/zipProductionBuild';
 
-const mode = process.env.NODE_ENV || 'development';
+const MODE: Environment = 'development';
 
 // generate the manifest.json file
-const semanticVersion = process.env.SEMANTIC_VERSION || packageJson.version;
+const semanticVersion = process.env.SEMANTIC_VERSION || version;
 const manifestVersion = convertSemver(semanticVersion);
-const manifest = getManifest(mode, manifestVersion);
+const manifest = getManifest(MODE, manifestVersion);
 
-console.log(info(`${manifest.short_name} v${manifest.version} ${mode} build starting...`));
+console.log(info(`${manifest.short_name} v${manifest.version} ${MODE} build starting...`));
 
 // kick off the webpack build
-webpack(config(mode, manifest), async error => {
+webpack(config(MODE, manifest), async error => {
     if (!error) {
         await onBuildSuccess();
         process.exit(0);

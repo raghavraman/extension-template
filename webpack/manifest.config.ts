@@ -1,5 +1,3 @@
-import { convertSemver } from './utils/convertSemver';
-
 const NAME = 'My Extension';
 const SHORT_NAME = 'my_extension';
 const DESCRIPTION = 'My Extension Description';

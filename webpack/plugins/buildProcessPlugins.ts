@@ -40,7 +40,7 @@ export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manif
                 filename: `${entryId}.html`,
                 chunks: [entryId],
                 title: entryId,
-                template: path.resolve('public', 'index.html'),
+                template: path.resolve('webpack', 'plugins', 'template.hbs'),
             })
         );
     }
@@ -73,16 +73,18 @@ export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manif
         })
     );
 
-    // notify the developer of build events
-    plugins.push(
-        new WebpackBuildNotifierPlugin({
-            title: `${manifest.short_name} v${manifest.version} ${mode}`,
-            logo: path.resolve('public', 'icons', 'icon_production_128.png'),
-            failureSound: 'Ping',
-            showDuration: true,
-            suppressWarning: true,
-        })
-    );
+    // notify the developer of build events when in development mode
+    if (mode === 'development') {
+        plugins.push(
+            new WebpackBuildNotifierPlugin({
+                title: `${manifest.short_name} v${manifest.version} ${mode}`,
+                logo: path.resolve('public', 'icons', 'icon_production_128.png'),
+                failureSound: 'Ping',
+                showDuration: true,
+                suppressWarning: true,
+            })
+        );
+    }
 
     // notify the developer of type errors
     plugins.push(new TypeErrorNotifierPlugin());

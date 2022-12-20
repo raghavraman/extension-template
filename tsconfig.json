@@ -43,7 +43,7 @@
         "webpack/**/*",
         "@types/**/*",
         "./package.json"
-    ],
+, "webpack/plugins/custom/.ts"    ],
     "exclude": [
         "node_modules",
         "**/.*/",
