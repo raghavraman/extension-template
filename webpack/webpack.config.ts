@@ -32,17 +32,16 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
     };
 
     if (mode === 'development') {
+        // TODO: add hot reloading script to the debug entry
         entry.debug = [path.resolve('src', 'debug')];
-        // entry.content.unshift(path.resolve('src', 'reactDevToolsActiveTab'));
-        // entry.popup.unshift(path.resolve('src', 'reactDevToolsActiveTab'));
+        entry.content.unshift(path.resolve('src', 'views', 'reactDevtools'));
+        // entry.popup.unshift(path.resolve('src', 'views', 'reactDevTools'));
     }
-
-    const htmlEntries: EntryId[] = ['popup', 'debug'];
 
     /** @see https://webpack.js.org/configuration for documentation */
     const config: Configuration = {
         mode,
-        devtool: 'inline-cheap-module-source-map',
+        devtool: mode === 'development' ? 'cheap-module-source-map' : undefined,
         bail: true,
         cache: true,
         // entry and resolve is what webpack uses for figuring out where to start bundling and how to resolve modules
@@ -80,36 +79,36 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
             errorsCount: true,
         },
         // this is where we define the plugins that webpack will use
-        plugins: getBuildPlugins(mode, htmlEntries, manifest),
+        plugins: getBuildPlugins(mode, entry, manifest),
     };
 
-    if (mode === 'production') {
-        config.optimization = {
-            minimize: true,
-            minimizer: [
-                new TerserPlugin({
-                    extractComments: false,
-                    parallel: false,
-                    terserOptions: {
-                        compress: {
-                            ecma: 2020,
-                            drop_console: true,
-                            drop_debugger: true,
-                            comparisons: false,
-                            inline: 2,
-                        },
-                        keep_classnames: false,
-                        keep_fnames: false,
-                        output: {
-                            ecma: 2020,
-                            comments: false,
-                            ascii_only: true,
-                        },
-                    },
-                }),
-            ],
-        };
-    }
+    // if (mode === 'production') {
+    //     config.optimization = {
+    //         minimize: true,
+    //         minimizer: [
+    //             new TerserPlugin({
+    //                 extractComments: false,
+    //                 parallel: false,
+    //                 terserOptions: {
+    //                     compress: {
+    //                         ecma: 2020,
+    //                         drop_console: true,
+    //                         drop_debugger: true,
+    //                         comparisons: false,
+    //                         inline: 2,
+    //                     },
+    //                     keep_classnames: false,
+    //                     keep_fnames: false,
+    //                     output: {
+    //                         ecma: 2020,
+    //                         comments: false,
+    //                         ascii_only: true,
+    //                     },
+    //                 },
+    //             }),
+    //         ],
+    //     };
+    // }
 
     return config;
 }
