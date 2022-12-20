@@ -10,7 +10,7 @@
         "rootDir": "./",
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
-        "module": "es2021",
+        "module": "ES2022",
         "moduleResolution": "node",
         "allowJs": true,
         "sourceMap": true,
