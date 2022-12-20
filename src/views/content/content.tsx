@@ -1,13 +1,22 @@
-// inject a new button into the document
+import React from 'react';
+import { render } from 'react-dom';
 import styles from './test.module.scss';
 
-const button = document.createElement('button');
-button.className = styles.button;
-button.innerText = 'Click me';
-button.onclick = () => {
-    alert('Button clicked!');
-};
+function Button() {
+    return (
+        <button className={styles.button} onClick={() => alert('Button clicked!')}>
+            Click me
+        </button>
+    );
+}
 
-console.log('Button added to the page');
+// render the button into the body
 
-document.body.appendChild(button);
+// create a new div element
+
+const div = document.createElement('div');
+div.id = 'root';
+
+document.body.appendChild(div);
+
+render(<Button />, div);

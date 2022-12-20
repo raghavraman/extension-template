@@ -37,8 +37,10 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
     if (mode === 'development') {
         // TODO: add hot reloading script to the debug entry
         entry.debug = [path.resolve('src', 'debug')];
-        entry.content.unshift(path.resolve('src', 'views', 'reactDevtools'));
-        // entry.popup.unshift(path.resolve('src', 'views', 'reactDevTools'));
+
+        // we need to import react-devtools before the react code in development
+        entry.content = [path.resolve('src', 'views', 'reactDevtools'), ...entry.content];
+        entry.popup = [path.resolve('src', 'views', 'reactDevtools'), ...entry.popup];
     }
 
     /** @see https://webpack.js.org/configuration for documentation */

@@ -32,7 +32,7 @@ const server = new WebpackDevServer(
         },
         allowedHosts: 'all',
         watchFiles: {
-            paths: ['src/**/*.{ts,tsx,js,jsx,html,css,scss,json,md,png,jpg,jpeg,gif,svg}'],
+            paths: ['src/**/*.{ts,tsx,js,jsx,html,css,scss,json,md,png,jpg,jpeg,gif,svg}', 'public/**/*'],
         },
     },
     compiler
