@@ -11,7 +11,7 @@ import HTMLWebpackPlugin from 'html-webpack-plugin';
 import TypeErrorNotifierPlugin from './custom/TypeErrorNotifierPlugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-export function getBuildPlugins(mode: Environment, entries: Entries, manifest: chrome.runtime.ManifestV3) {
+export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manifest: chrome.runtime.ManifestV3) {
     let plugins: WebpackPluginInstance[] = [];
 
     // show the progress of the build
@@ -28,11 +28,9 @@ export function getBuildPlugins(mode: Environment, entries: Entries, manifest: c
         })
     );
 
-    const htmlEntries: EntryId[] = ['popup', 'debug'];
-
     // create an html file for each entry point that needs one
     for (const entryId of htmlEntries) {
-        if (!entries[entryId]) return;
+        // if (!entries[entryId]) return;
         plugins.push(
             new HTMLWebpackPlugin({
                 hash: false,
