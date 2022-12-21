@@ -5,7 +5,7 @@ import { info, success } from './utils/chalk';
 import { getManifest } from './manifest.config';
 import { version } from '../package.json';
 import { convertSemver } from './utils/convertSemver';
-import printBuildErrors from './utils/printBuildError';
+import printError from './utils/printError';
 import { zipProductionBuild } from './utils/zipProductionBuild';
 
 const MODE: Environment = 'production';
@@ -36,11 +36,11 @@ async function onBuildSuccess(): Promise<void> {
 
 function onBuildFailure(error: Error): void {
     if (!error.message) {
-        return printBuildErrors(error);
+        return printError(error);
     }
     const messages = formatWebpackMessages({ errors: [error.message], warnings: [] });
     if (messages.errors.length > 1) {
         messages.errors.length = 1;
     }
-    return printBuildErrors(new Error(messages.errors.join('\n\n')));
+    return printError(new Error(messages.errors.join('\n\n')));
 }

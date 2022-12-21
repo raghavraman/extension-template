@@ -4,7 +4,7 @@ import { error } from './chalk';
  * Print Errors that we got back from webpack
  * @param e the error provided by webpacxk
  */
-export default function printBuildError(e: Error) {
+export default function printError(e: Error) {
     console.log('printBuildError -> e', e);
     if (process.env.TSC_COMPILE_ON_ERROR === 'true') {
         printBuildError(e);

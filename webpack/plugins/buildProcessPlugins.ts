@@ -1,16 +1,23 @@
 import path from 'path';
 import dotenv from 'dotenv';
 import webpack, { WebpackPluginInstance } from 'webpack';
-import { Entries, EntryId } from 'webpack/webpack.config';
+import { EntryId } from 'webpack/webpack.config';
 import CreateFileWebpack from 'create-file-webpack';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import WebpackBuildNotifierPlugin from 'webpack-build-notifier';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
-import TypeErrorNotifierPlugin from './custom/TypeErrorNotifierPlugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import TypeErrorNotifierPlugin from './custom/TypeErrorNotifierPlugin';
 
+/**
+ *  Gets the plugins that are used in the build process
+ * @param mode the environment that the build is running in
+ * @param htmlEntries the entry points that need an html file
+ * @param manifest the manifest.json file
+ * @returns an array of webpack plugins
+ */
 export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manifest: chrome.runtime.ManifestV3) {
     let plugins: WebpackPluginInstance[] = [];
 

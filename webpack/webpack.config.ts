@@ -1,9 +1,9 @@
 import { Configuration, EntryObject } from 'webpack';
 import path from 'path';
+import TerserPlugin from 'terser-webpack-plugin';
 import { moduleResolutionPlugins } from './plugins/moduleResolutionPlugins';
 import loaders from './loaders';
 import { getBuildPlugins } from './plugins/buildProcessPlugins';
-import TerserPlugin from 'terser-webpack-plugin';
 
 export interface Entries {
     content: string[];
