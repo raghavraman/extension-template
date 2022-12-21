@@ -7,5 +7,5 @@ export default function onHistoryStateUpdated(
     details: chrome.webNavigation.WebNavigationTransitionCallbackDetails
 ): void {
     const { tabId, url } = details;
-    // send a message to tab with tabId to reanalyze the page
+    // TODO: send a message to tab with tabId to reanalyze the page
 }

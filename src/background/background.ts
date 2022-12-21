@@ -9,8 +9,7 @@ onServiceWorkerAlive();
 
 /**
  * will be triggered on either install or update
- * (also when the extension is installed  through chrome device syncing!)
- * for analytics, put something into chrome.storage.sync to guard against it
+ * (will also be triggered on a user's sync'd browsers (on other devices)))
  */
 chrome.runtime.onInstalled.addListener(details => {
     switch (details.reason) {
