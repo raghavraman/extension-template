@@ -1,22 +1,22 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { tabManagementSender } from 'src/shared/messages/TabMessages';
+
 import styles from './test.module.scss';
 
 export function Button() {
+    const handleOpenUrl = (url: string) => () => {
+        tabManagementSender.openNewTab({ url });
+    };
+
     return (
-        <button className={styles.button} onClick={() => alert('Button clicked!')}>
+        <button className={styles.button} onClick={handleOpenUrl('https://www.google.com')}>
             Click me
         </button>
     );
 }
 
-let x = 1;
-
-interface y {}
-
-// render the button into the body
-
-// create a new div element
+tabManagementSender.getTabId();
 
 const div = document.createElement('div');
 div.id = 'root';

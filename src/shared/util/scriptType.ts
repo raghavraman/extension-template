@@ -1,9 +1,4 @@
-export enum ScriptType {
-    BACKGROUND = 'BACKGROUND',
-    CONTENT = 'CONTENT',
-    POPUP = 'POPUP',
-    EXTENSION_PAGE = 'EXTENSION_PAGE',
-}
+type ScriptType = 'BACKGROUND' | 'CONTENT' | 'POPUP' | 'EXTENSION_PAGE';
 
 /**
  * Uses global variables to determine the type of the extension script that is currently being executed.
@@ -12,14 +7,14 @@ export enum ScriptType {
 export function computeScriptType(): ScriptType {
     if (typeof window !== 'undefined') {
         if (window.location.pathname.includes('/popup.html')) {
-            return ScriptType.POPUP;
+            return 'POPUP';
         }
         if (window.location.href.includes(`chrome-extension://${chrome.runtime.id}`)) {
-            return ScriptType.EXTENSION_PAGE;
+            return 'EXTENSION_PAGE';
         }
-        return ScriptType.CONTENT;
+        return 'CONTENT';
     }
-    return ScriptType.BACKGROUND;
+    return 'BACKGROUND';
 }
 
 export const SCRIPT_TYPE = computeScriptType();

@@ -1,9 +1,11 @@
 import { generateRandomId } from 'src/shared/util/random';
+import { SECOND } from 'src/shared/util/time';
 import onHistoryStateUpdated from './events/onHistoryStateUpdated';
 import onInstall from './events/onInstall';
 import onNewChromeSession from './events/onNewChromeSession';
 import onServiceWorkerAlive from './events/onServiceWorkerAlive';
 import onUpdate from './events/onUpdate';
+import { tabManagementListener } from './handlers/tabManagementListener';
 
 onServiceWorkerAlive();
 
@@ -23,6 +25,13 @@ chrome.runtime.onInstalled.addListener(details => {
             break;
     }
 });
+
+// listen for background incoming messages
+try {
+    tabManagementListener.listen();
+} catch (error) {
+    console.error('Error while listening for messages', error);
+}
 
 // This event is fired when any tab's url changes.
 chrome.webNavigation.onHistoryStateUpdated.addListener(onHistoryStateUpdated);
