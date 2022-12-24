@@ -16,7 +16,6 @@
         "airbnb-typescript",
         "plugin:jest/recommended",
         "prettier",
-        "plugin:storybook/recommended"
     ],
     "plugins": [
         "import",

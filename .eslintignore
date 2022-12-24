@@ -83,9 +83,6 @@ typings/
 # IntelliJ
 .idea
 
-# Storybook static files
-storybook-static
-
 # Sylelint IntelliJ Plugin Requirement
 .stylelintrc.json
 
