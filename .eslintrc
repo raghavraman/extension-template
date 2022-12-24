@@ -15,7 +15,7 @@
         "airbnb/rules/react",
         "airbnb-typescript",
         "plugin:jest/recommended",
-        "prettier",
+        "prettier"
     ],
     "plugins": [
         "import",
