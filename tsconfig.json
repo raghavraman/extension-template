@@ -44,6 +44,7 @@
         "webpack/**/*",
         "@types/**/*",
         "./package.json",
+        "./release.config.js",
         "webpack/plugins/custom/.ts"
     ],
     "exclude": [

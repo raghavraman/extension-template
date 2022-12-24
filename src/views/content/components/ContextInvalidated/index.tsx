@@ -26,17 +26,18 @@ function ContextInvalidated() {
     );
 }
 
+/**
+ * This function is used to detect when the extension's context has been invalidated, and to display a ribbon in the tab
+ */
 export default function watchForContextInvalidation() {
-    if (process.env.NODE_ENV === 'development') {
-        const interval = setInterval(() => {
-            // this means the current tab's context has been invalidated
-            if (!chrome.runtime.id) {
-                clearInterval(interval);
-                const div = document.createElement('div');
-                div.id = CONTEXT_INVALIDATED_ID;
-                document.body.appendChild(div);
-                render(<ContextInvalidated />, div);
-            }
-        }, 1 * SECOND);
-    }
+    const interval = setInterval(() => {
+        // this means the current tab's context has been invalidated
+        if (!chrome.runtime.id) {
+            clearInterval(interval);
+            const div = document.createElement('div');
+            div.id = CONTEXT_INVALIDATED_ID;
+            document.body.appendChild(div);
+            render(<ContextInvalidated />, div);
+        }
+    }, 1 * SECOND);
 }

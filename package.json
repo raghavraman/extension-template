@@ -13,10 +13,12 @@
         "lint": "eslint ./ --ext .ts,.tsx"
     },
     "dependencies": {
+        "@semantic-release/exec": "^6.0.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "rxjs": "^7.8.0",
-        "sass": "^1.57.1"
+        "sass": "^1.57.1",
+        "semantic-release": "^19.0.5"
     },
     "devDependencies": {
         "@svgr/webpack": "^6.5.1",
