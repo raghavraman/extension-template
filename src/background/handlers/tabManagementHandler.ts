@@ -13,9 +13,4 @@ export const tabManagementHandler = new BrowserActionHandler({
             sendResponse();
         });
     },
-    storeValue({ data, sendResponse }) {
-        chromeSessionStore.setChromeSessionId(`${data.num}`).then(() => {
-            sendResponse();
-        });
-    },
 });
