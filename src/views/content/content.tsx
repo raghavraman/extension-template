@@ -1,10 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { tabManagementSender } from 'src/shared/messages/TabMessages';
+import watchForContextInvalidation from './components/ContextInvalidated';
+import styles from './content.module.scss';
 
-import styles from './test.module.scss';
+watchForContextInvalidation();
 
-export function Button() {
+export function Button(): JSX.Element {
     const handleOpenUrl = (url: string) => () => {
         tabManagementSender.openNewTab({ url });
         tabManagementSender.storeValue({ num: Math.random() * 100 });

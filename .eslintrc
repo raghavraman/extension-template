@@ -8,8 +8,11 @@
         "webextensions": true
     },
     "extends": [
-        "airbnb",
-        "airbnb/hooks",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "airbnb-base",
+        "airbnb/rules/react",
         "airbnb-typescript",
         "plugin:jest/recommended",
         "prettier",

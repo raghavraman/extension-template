@@ -1,0 +1,26 @@
+.ribbon {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 165, 0, 0.8);
+    color: white;
+    padding: 8px;
+    font-size: 20px;
+    text-align: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    z-index: 999999999999;
+    cursor: pointer;
+    font-family: 'museo-sans';
+
+    .closeButton {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 8px;
+        padding-right: 20px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+}
