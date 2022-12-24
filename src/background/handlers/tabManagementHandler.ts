@@ -1,5 +1,4 @@
 import { BrowserActionHandler } from 'src/shared/messages/TabMessages';
-import chromeSessionStore from '../storage/chromeSessionStore';
 
 export const tabManagementHandler = new BrowserActionHandler({
     async getTabId({ sendResponse, sender }) {

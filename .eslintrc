@@ -4,7 +4,6 @@
         "browser": true,
         "es6": true,
         "node": true,
-        "jest": true,
         "webextensions": true
     },
     "extends": [
@@ -14,7 +13,6 @@
         "airbnb-base",
         "airbnb/rules/react",
         "airbnb-typescript",
-        "plugin:jest/recommended",
         "prettier"
     ],
     "plugins": [
@@ -25,12 +23,9 @@
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly",
-        "page": true,
         "debugger": true,
         "browser": true,
         "context": true,
-        "Console": true,
-        "jestPuppeteer": true,
         "JSX": true
     },
     "parser": "@typescript-eslint/parser",
@@ -87,7 +82,6 @@
         "@typescript-eslint/no-use-before-define": [
             "off"
         ],
-        "jest/no-disabled-tests": "off",
         "class-methods-use-this": "off",
         "react-hooks/exhaustive-deps": "warn",
         "@typescript-eslint/lines-between-class-members": "off",
@@ -105,7 +99,6 @@
         "import/no-cycle": "off",
         "import/no-extraneous-dependencies": "off",
         "react/jsx-props-no-spreading": "off",
-        "jest/expect-expect": "off",
         "keyword-spacing": [
             "error",
             {

@@ -8,11 +8,11 @@
     "scripts": {
         "start": "tsx webpack/development.ts",
         "build": "tsx webpack/production.ts",
+        "release": "tsx webpack/release.ts",
         "devtools": "react-devtools",
         "lint": "eslint ./ --ext .ts,.tsx"
     },
     "dependencies": {
-        "jest": "^29.3.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "rxjs": "^7.8.0",
@@ -41,7 +41,6 @@
         "eslint-config-prettier": "^8.5.0",
         "eslint-import-resolver-typescript": "^3.5.2",
         "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-jest": "^27.1.7",
         "eslint-plugin-jsdoc": "^39.6.4",
         "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-react": "^7.31.11",
