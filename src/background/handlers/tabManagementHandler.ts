@@ -1,6 +1,7 @@
-import { TabManagementListener } from 'src/shared/messages/TabMessages';
+import { BrowserActionHandler } from 'src/shared/messages/TabMessages';
+import chromeSessionStore from '../storage/chromeSessionStore';
 
-export const tabManagementListener = new TabManagementListener({
+export const tabManagementHandler = new BrowserActionHandler({
     async getTabId({ sendResponse, sender }) {
         sendResponse(sender.tab?.id ?? -1);
     },
@@ -9,6 +10,11 @@ export const tabManagementListener = new TabManagementListener({
     },
     removeTab({ data, sendResponse }) {
         chrome.tabs.remove(data.tabId, () => {
+            sendResponse();
+        });
+    },
+    storeValue({ data, sendResponse }) {
+        chromeSessionStore.setChromeSessionId(`${data.num}`).then(() => {
             sendResponse();
         });
     },

@@ -5,4 +5,4 @@ interface BrowserActionMessages extends MessageDefinition {
     disableBrowserAction: () => void;
 }
 
-export const [browserActionSender, BrowserActionMessagesListener] = createMessages<BrowserActionMessages>();
+export const [browserActionSender, BrowserActionHandler] = createMessages<BrowserActionMessages>();

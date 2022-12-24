@@ -11,6 +11,15 @@ export function capitalize(input: string): string {
 }
 
 /**
+ * Given a string, returns a string with the first letter capitalized.
+ * @param input capitalize the first letter of this string
+ * @returns the string with the first letter capitalized
+ */
+export function capitalizeFirstLetter(input: string): string {
+    return input.charAt(0).toUpperCase() + input.slice(1);
+}
+
+/**
  * Cuts the
  * @param input The string to ellipsify.
  * @param length The length of the string to return.

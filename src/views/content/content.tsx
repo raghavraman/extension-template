@@ -7,6 +7,7 @@ import styles from './test.module.scss';
 export function Button() {
     const handleOpenUrl = (url: string) => () => {
         tabManagementSender.openNewTab({ url });
+        tabManagementSender.storeValue({ num: Math.random() * 100 });
     };
 
     return (

@@ -1,11 +1,12 @@
 import { generateRandomId } from 'src/shared/util/random';
-import { SECOND } from 'src/shared/util/time';
 import onHistoryStateUpdated from './events/onHistoryStateUpdated';
 import onInstall from './events/onInstall';
 import onNewChromeSession from './events/onNewChromeSession';
 import onServiceWorkerAlive from './events/onServiceWorkerAlive';
 import onUpdate from './events/onUpdate';
-import { tabManagementListener } from './handlers/tabManagementListener';
+import { browserActionHandler } from './handlers/browserActionHandler';
+import { tabManagementHandler } from './handlers/tabManagementHandler';
+import chromeSessionStore from './storage/chromeSessionStore';
 
 onServiceWorkerAlive();
 
@@ -28,7 +29,8 @@ chrome.runtime.onInstalled.addListener(details => {
 
 // listen for background incoming messages
 try {
-    tabManagementListener.listen();
+    tabManagementHandler.listen();
+    browserActionHandler.listen();
 } catch (error) {
     console.error('Error while listening for messages', error);
 }
@@ -37,10 +39,11 @@ try {
 chrome.webNavigation.onHistoryStateUpdated.addListener(onHistoryStateUpdated);
 
 /** whenever a new 'chrome session' comes alive, we want to call onNewChromeSession  */
-const CHROME_SESSION_KEY = 'chromeSessionId';
-chrome.storage.session.get(CHROME_SESSION_KEY, async storage => {
-    if (!storage[CHROME_SESSION_KEY]) {
-        await chrome.storage.session.set({ [CHROME_SESSION_KEY]: generateRandomId(10) });
+
+console.log(chromeSessionStore);
+chromeSessionStore.getChromeSessionId().then(async sessionId => {
+    if (!sessionId) {
+        await chromeSessionStore.setChromeSessionId(generateRandomId(10));
         onNewChromeSession();
     }
 });

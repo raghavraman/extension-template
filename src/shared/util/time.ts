@@ -1,43 +1,13 @@
-type TimeUnit = number;
-
-export const MILLISECOND: TimeUnit = 1;
-export const SECOND: TimeUnit = 1000 * MILLISECOND;
-export const MINUTE: TimeUnit = 60 * SECOND;
-export const HOUR: TimeUnit = 60 * MINUTE;
-export const DAY: TimeUnit = 24 * HOUR;
-
-interface AwaitUntilOptions {
-    timeout?: number;
-    interval?: number;
-    silentTimeout?: boolean;
-}
-
-export const awaitUntil = (
-    predicate: () => boolean,
-    options: AwaitUntilOptions = {
-        timeout: 1000,
-        interval: 100,
-    }
-): Promise<void> =>
-    Promise.any([
-        new Promise<void>(resolve => {
-            const interval = setInterval(() => {
-                if (predicate()) {
-                    clearInterval(interval);
-                    resolve();
-                }
-            }, options.interval);
-        }),
-        sleep(options.timeout!).then(() => {
-            throw new Error(`awaitUntil timed out after ${options.timeout}ms`);
-        }),
-    ]);
+export const MILLISECOND = 1;
+export const SECOND = 1000 * MILLISECOND;
+export const MINUTE = 60 * SECOND;
+export const HOUR = 60 * MINUTE;
+export const DAY = 24 * HOUR;
 
 /**
  *
  */
-export const sleep = (milliseconds: number | TimeUnit): Promise<void> =>
-    new Promise(resolve => setTimeout(resolve, milliseconds));
+export const sleep = (milliseconds: number): Promise<void> => new Promise(resolve => setTimeout(resolve, milliseconds));
 
 /**
  * Checks to see if expired by the time first stored and the time frame that it is stored for
@@ -46,5 +16,4 @@ export const sleep = (milliseconds: number | TimeUnit): Promise<void> =>
  * @param threshold time frame it can be stored for
  * @return true if expired, false if the time frame is still in range
  */
-export const didExpire = (time: number, threshold: number | TimeUnit): boolean => time + threshold <= Date.now();
-
+export const didExpire = (time: number, threshold: number): boolean => time + threshold <= Date.now();

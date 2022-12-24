@@ -196,18 +196,9 @@
                         "from": "./",
                         "except": [
                             "./src/shared",
-                            "./node_modules",
-                            "./src/config"
+                            "./node_modules"
                         ],
                         "message": "You cannot import into `shared` from an external directory."
-                    },
-                    {
-                        "target": "./src",
-                        "from": "./src/background/storage/util/LocalStorage",
-                        "except": [
-                            "./src/background/storage/**/*"
-                        ],
-                        "message": "You can only use LocalStorage from within the `background/data` directory. If you wish to access storage elsewhere within the `background` folder, use one of the modules in `background/data/modules`. You cannot access `LocalStorage` from within the `views` directory."
                     }
                 ]
             }

@@ -26,7 +26,7 @@ type MessageContext<M extends MessageDefinition, K extends keyof M> = {
     sendResponse: (response: ReturnType<M[K]>) => void;
 };
 
-type MessageHandler<M extends MessageDefinition> = {
+type MessageListener<M extends MessageDefinition> = {
     [K in keyof M]: (context: MessageContext<M, K>) => Promise<void> | void;
 };
 
@@ -38,7 +38,7 @@ type MessageSender<M extends MessageDefinition> = {
  * A wrapper for chrome extension messaging with a type-safe API.
  * @returns A tuple of a `MessageSender` instance and a `MessageListener` class.
  */
-export function createMessages<M extends MessageDefinition>(): [MessageSender<M>, MessageListener<M>] {
+export function createMessages<M extends MessageDefinition>(): [MessageSender<M>, Handler<M>] {
     const sender = new Proxy(
         {},
         {
@@ -78,17 +78,17 @@ export function createMessages<M extends MessageDefinition>(): [MessageSender<M>
         }
     );
 
-    return [sender, Listener<M>] as any;
+    return [sender, MessageHandler<M>] as any;
 }
 
 /**
  * A class that listens for messages
  */
-type MessageListener<M extends MessageDefinition> = new (handlers: MessageHandler<M>) => Listener<M>;
+type Handler<M extends MessageDefinition> = new (handlers: MessageListener<M>) => MessageHandler<M>;
 
-class Listener<M extends MessageDefinition> {
+class MessageHandler<M extends MessageDefinition> {
     /** The handlers that this listener will use to handle messages. */
-    public handlers = {} as MessageHandler<M>;
+    public handlers = {} as MessageListener<M>;
 
     /**
      * The endpoint that this listener is initialized on (and thus listening on).
@@ -96,7 +96,7 @@ class Listener<M extends MessageDefinition> {
      * */
     public endpoint: MessageEndpoint = SCRIPT_TYPE === 'BACKGROUND' ? 'BACKGROUND' : 'VIEW';
 
-    constructor(handlers: MessageHandler<M>) {
+    constructor(handlers: MessageListener<M>) {
         this.handlers = handlers;
     }
 
