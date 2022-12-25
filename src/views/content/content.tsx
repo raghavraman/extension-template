@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { tabManagementSender } from 'src/shared/messages/TabMessages';
+import { tabManagementSender } from 'src/shared/messages/TabManagementMessages';
 import { Button } from './components/Button/Button';
 import watchForContextInvalidation from './components/ContextInvalidated';
 

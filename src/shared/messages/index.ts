@@ -26,7 +26,7 @@ type MessageContext<M extends MessageDefinition, K extends keyof M> = {
     sendResponse: (response: ReturnType<M[K]>) => void;
 };
 
-type MessageListener<M extends MessageDefinition> = {
+export type MessageHandler<M extends MessageDefinition> = {
     [K in keyof M]: (context: MessageContext<M, K>) => Promise<void> | void;
 };
 
@@ -36,9 +36,9 @@ type MessageSender<M extends MessageDefinition> = {
 
 /**
  * A wrapper for chrome extension messaging with a type-safe API.
- * @returns A tuple of a `MessageSender` instance and a `MessageListener` class.
+ * @returns A tuple of a `MessageSender` instance and a `MessageHandler` class.
  */
-export function createMessages<M extends MessageDefinition>(): [MessageSender<M>, Handler<M>] {
+export function createMessages<M extends MessageDefinition>(): [MessageSender<M>, Listener<M>] {
     const sender = new Proxy(
         {},
         {
@@ -78,17 +78,19 @@ export function createMessages<M extends MessageDefinition>(): [MessageSender<M>
         }
     );
 
-    return [sender, MessageHandler<M>] as any;
+    return [sender, MessageListener<M>] as any;
 }
 
 /**
  * A class that listens for messages
  */
-type Handler<M extends MessageDefinition> = new (handlers: MessageListener<M>) => MessageHandler<M>;
+type Listener<M extends MessageDefinition> = new (handlers: MessageHandler<M>) => MessageListener<M>;
 
-class MessageHandler<M extends MessageDefinition> {
+export class MessageListener<M extends MessageDefinition> {
     /** The handlers that this listener will use to handle messages. */
-    public handlers = {} as MessageListener<M>;
+    public handlers = {} as MessageHandler<M>;
+
+    public callback: (message: Message<M>, sender, sendResponse) => void;
 
     /**
      * The endpoint that this listener is initialized on (and thus listening on).
@@ -96,7 +98,7 @@ class MessageHandler<M extends MessageDefinition> {
      * */
     public endpoint: MessageEndpoint = SCRIPT_TYPE === 'BACKGROUND' ? 'BACKGROUND' : 'VIEW';
 
-    constructor(handlers: MessageListener<M>) {
+    constructor(handlers: MessageHandler<M>) {
         this.handlers = handlers;
     }
 
@@ -104,7 +106,7 @@ class MessageHandler<M extends MessageDefinition> {
      * Begin listening for messages using the provided handlers.
      */
     listen() {
-        chrome.runtime.onMessage.addListener((message: Message<M>, sender, sendResponse) => {
+        this.callback = (message: Message<M>, sender, sendResponse) => {
             const { name, data, from, to } = message;
             const handler = this.handlers[name];
 
@@ -119,6 +121,16 @@ class MessageHandler<M extends MessageDefinition> {
                 });
             }
             return true;
-        });
+        };
+
+        chrome.runtime.onMessage.addListener(this.callback);
+    }
+
+    /**
+     * Stop listening for messages.
+     */
+
+    destroy() {
+        chrome.runtime.onMessage.removeListener(this.callback);
     }
 }

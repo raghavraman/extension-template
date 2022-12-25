@@ -1,8 +1,8 @@
-import { createMessages, MessageDefinition } from '.';
+import { createMessages } from '.';
 
-interface BrowserActionMessages extends MessageDefinition {
+type BrowserActionMessages = {
     enableBrowserAction: () => void;
     disableBrowserAction: () => void;
-}
+};
 
-export const [browserActionSender, BrowserActionHandler] = createMessages<BrowserActionMessages>();
+export const [browserActionSender, BrowserActionListener] = createMessages<BrowserActionMessages>();

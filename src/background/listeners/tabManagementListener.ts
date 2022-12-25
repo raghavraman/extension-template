@@ -1,6 +1,6 @@
-import { BrowserActionHandler } from 'src/shared/messages/TabMessages';
+import { TabManagementListener } from 'src/shared/messages/TabManagementMessages';
 
-export const tabManagementHandler = new BrowserActionHandler({
+export const tabManagementListener = new TabManagementListener({
     async getTabId({ sendResponse, sender }) {
         sendResponse(sender.tab?.id ?? -1);
     },

@@ -88,10 +88,7 @@ export function createStore<B extends Bucket>(
 
     const observer = {} as StoreObserver<B>;
     observer.observe = callbacks => {
-        chrome.storage.onChanged.addListener(async (changes, areaName) => {
-            if (areaName !== area) {
-                return;
-            }
+        chrome.storage[area].onChanged.addListener(async changes => {
             await validate();
             for (const key of Object.keys(changes)) {
                 const callback = callbacks[`onChange${capitalizeFirstLetter(key)}`];

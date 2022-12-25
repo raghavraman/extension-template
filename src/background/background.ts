@@ -4,8 +4,8 @@ import onInstall from './events/onInstall';
 import onNewChromeSession from './events/onNewChromeSession';
 import onServiceWorkerAlive from './events/onServiceWorkerAlive';
 import onUpdate from './events/onUpdate';
-import { browserActionHandler } from './handlers/browserActionHandler';
-import { tabManagementHandler } from './handlers/tabManagementHandler';
+import { browserActionListener } from './listeners/browserActionHandler';
+import { tabManagementListener } from './listeners/tabManagementListener';
 import chromeSessionStore from './storage/chromeSessionStore';
 
 onServiceWorkerAlive();
@@ -29,8 +29,8 @@ chrome.runtime.onInstalled.addListener(details => {
 
 // listen for background incoming messages
 try {
-    tabManagementHandler.listen();
-    browserActionHandler.listen();
+    tabManagementListener.listen();
+    browserActionListener.listen();
 } catch (error) {
     console.error('Error while listening for messages', error);
 }

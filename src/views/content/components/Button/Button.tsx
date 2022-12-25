@@ -1,11 +1,10 @@
 import React from 'react';
-import { tabManagementSender } from 'src/shared/messages/TabMessages';
+import { tabManagementSender } from 'src/shared/messages/TabManagementMessages';
 import styles from './Button.module.scss';
 
 export function Button(): JSX.Element {
     const handleOpenUrl = (url: string) => () => {
         tabManagementSender.openNewTab({ url });
-        tabManagementSender.storeValue({ num: Math.random() * 100 });
     };
 
     return (
