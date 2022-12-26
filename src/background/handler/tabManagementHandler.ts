@@ -2,11 +2,17 @@ import TabManagementMessages from 'src/shared/messages/TabManagementMessages';
 import { MessageHandler } from 'src/shared/types';
 
 const tabManagementHandler: MessageHandler<TabManagementMessages> = {
-    getTabId({ data, sendResponse, sender }) {
+    getTabId({ sendResponse, sender }) {
         sendResponse(sender.tab?.id ?? -1);
     },
-    openNewTab({ data, sendResponse }) {},
-    removeTab({ data, sendResponse }) {},
+    openNewTab({ data, sendResponse }) {
+        const { url } = data;
+        chrome.tabs.create({ url }).then(sendResponse);
+    },
+    removeTab({ data, sendResponse }) {
+        const { tabId } = data;
+        chrome.tabs.remove(tabId).then(sendResponse);
+    },
 };
 
 export default tabManagementHandler;

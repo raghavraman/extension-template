@@ -1,9 +1,21 @@
+import { LocalStorage, SessionStorage, SyncStorage } from 'src/shared/storage';
+import { generateRandomId } from 'src/shared/util/random';
 import { SECOND } from 'src/shared/util/time';
 
 export default async function onInstall() {
     // set the uninstall url
     chrome.runtime.setUninstallURL('https://www.google.com');
     logOnInstallEvent();
+
+    await Promise.all([
+        SyncStorage.initialize({
+            installed: true,
+        }),
+
+        LocalStorage.initialize({}),
+
+        SessionStorage.initialize({}),
+    ]);
 }
 
 /**

@@ -1,7 +1,10 @@
 import { BACKGROUND_MESSAGES } from 'src/shared/messages';
-import { Message, MessageHandler } from 'src/shared/types';
+import { SessionStorage } from 'src/shared/storage';
+import { Message } from 'src/shared/types';
+import { generateRandomId } from 'src/shared/util/random';
 import onHistoryStateUpdated from './events/onHistoryStateUpdated';
 import onInstall from './events/onInstall';
+import onNewChromeSession from './events/onNewChromeSession';
 import onServiceWorkerAlive from './events/onServiceWorkerAlive';
 import onUpdate from './events/onUpdate';
 import { backgroundHandlers } from './handler';
@@ -43,12 +46,9 @@ chrome.runtime.onMessage.addListener((message: Message<BACKGROUND_MESSAGES>, sen
     return true;
 });
 
-/** whenever a new 'chrome session' comes alive, we want to call onNewChromeSession  */
-
-// console.log(chromeSessionStore);
-// chromeSessionStore.getChromeSessionId().then(async sessionId => {
-//     if (!sessionId) {
-//         await chromeSessionStore.setChromeSessionId(generateRandomId(10));
-//         onNewChromeSession();
-//     }
-// });
+SessionStorage.get('chromeSessionId').then(async sessionId => {
+    if (!sessionId) {
+        await SessionStorage.set('chromeSessionId', generateRandomId(10));
+        onNewChromeSession();
+    }
+});
