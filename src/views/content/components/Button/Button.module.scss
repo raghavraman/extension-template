@@ -1,3 +1,5 @@
+@import 'src/views/styles/base.module.scss';
+
 .button {
     background-color: #000;
     color: #fff;
@@ -8,6 +10,7 @@
     font-size: 16px;
     font-weight: 600;
     transition: all 0.3s ease;
+    font-family: 'Inter';
 
     &:hover {
         background-color: #fff;

@@ -1,3 +1,5 @@
+@import 'src/views/styles/base.module.scss';
+
 .ribbon {
     position: fixed;
     bottom: 0;
@@ -11,8 +13,8 @@
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     z-index: 999999999999;
+    font-family: 'Inter';
     cursor: pointer;
-    font-family: 'museo-sans';
 
     .closeButton {
         position: absolute;
