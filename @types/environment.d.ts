@@ -8,7 +8,7 @@ declare global {
             MANIFEST_KEY?: string;
             /**
              * The Node semantic versioning-compatible version of the extension. For preview-style releases, this variable
-             * converts versions like 1.0.0.100 to 1.0.0-alpha.1.
+             * converts versions like 1.0.0.100 to 1.0.0-beta.1.
              */
             SEMANTIC_VERSION?: string;
         }

@@ -5,7 +5,7 @@ import { parse } from 'semver';
  * with the extension stores.
  *
  * @example
- * semverVersionTo('1.0.0-alpha.1`) returns 1.0.0.100
+ * semverVersionTo('1.0.0-beta.1`) returns 1.0.0.100
  */
 export function convertSemver(version: string): string {
     const semver = parse(version);
