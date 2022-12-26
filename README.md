@@ -7,3 +7,4 @@ An Opinionated Chrome Extension Boilerplate with
 - Prettier
 - Semantic-Release
 - Custom Messaging & Storage wrappers
+
