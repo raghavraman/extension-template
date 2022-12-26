@@ -3,7 +3,7 @@
 // Thank you ben limmer for this config
 // https://github.com/blimmer/semantic-release-demo-2/blob/main/release.config.js
 
-module.exports = {
+export default {
     branches: [
         'production',
         {
