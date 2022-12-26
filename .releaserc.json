@@ -23,13 +23,13 @@
         [
             "@semantic-release/exec",
             {
-                "prepareCmd": "RELEASE_VERSION=${nextRelease.version} npm run build"
+                "prepareCmd": "SEMANTIC_VERSION=${nextRelease.version} npm run build"
             }
         ],
         [
             "@semantic-release/github",
             {
-                "assets": "dist/**/artifacts/*.*",
+                "assets": "build/**/artifacts/*.*",
                 "failComment": false
             }
         ]
