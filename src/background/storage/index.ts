@@ -1,5 +1,5 @@
 import { SerialWrapper } from 'src/shared/types';
-import { capitalize, capitalizeFirstLetter } from 'src/shared/util/string';
+import { capitalizeFirstLetter } from 'src/shared/util/string';
 
 type StorageArea = 'sync' | 'local' | 'session';
 type Bucket = Record<string, any>;
@@ -15,7 +15,9 @@ type StorageChange<T> = {
 
 type Store<B extends Bucket> = keyof B extends string
     ? {
-          [K in keyof B as SET<K>]: (value: B[K]) => Promise<void>;
+          set: {
+              [K in keyof B]: (value: B[K]) => Promise<void>;
+          };
       } & {
           [K in keyof B as GET<K extends string ? K : never>]: () => Promise<B[K]>;
       } & {

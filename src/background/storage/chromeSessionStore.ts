@@ -1,6 +1,7 @@
 import { createStore, StoreDefaults } from '.';
 
 interface IChromeSessionStore {
+    /** Test */
     chromeSessionId?: string;
 }
 
