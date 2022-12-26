@@ -1,4 +1,4 @@
-import { Store } from '..';
+import { Store } from './Store';
 
 /**
  * chrome.sync.storage is a permanent storage area that is synced with other devices.

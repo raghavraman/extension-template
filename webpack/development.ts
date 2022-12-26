@@ -1,6 +1,7 @@
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import path from 'path';
+import { Server } from 'socket.io';
 import config from './webpack.config';
 import { version } from '../package.json';
 import { getManifest } from './manifest.config';
@@ -16,7 +17,6 @@ initializeHotReloading(HOT_RELOAD_PORT, compiler);
 
 const server = new WebpackDevServer(
     {
-        port: HOT_RELOAD_PORT,
         https: false,
         hot: false,
         client: false,

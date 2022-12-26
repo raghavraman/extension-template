@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import { backgroundMessenger } from 'src/shared/messages';
 
 const socket = io('http://localhost:9090');
 let reBuilding = false;
@@ -13,20 +14,20 @@ socket.onAny(args => {
 
 socket.on('connect', async () => {
     if (!reBuilding) {
-        console.log('%c[hot-reloading] listening for changes...', 'color:white; background-color: #E91652;');
+        console.log('%c[hot-reloading] listening for changes...', 'color:white; background-color: orange;');
     } else {
         console.log(
             '%c[hot-reloading] changes detected, rebuilding and refreshing...',
-            'color:white; background-color: #E91652;'
+            'color:white; background-color: orange;'
         );
     }
 });
 
 socket.on('reload', async () => {
+    console.log('%c[hot-reloading] reloading...', 'color:white; background-color: orange;');
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
         if (tabs?.[0]?.id) {
-            chrome.tabs.reload(tabs[0].id);
-            chrome.runtime.reload();
+            backgroundMessenger.reloadExtension();
         }
     });
 });

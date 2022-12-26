@@ -1,7 +1,9 @@
 import { LocalStorage, SessionStorage, SyncStorage } from 'src/shared/storage';
-import { generateRandomId } from 'src/shared/util/random';
 import { SECOND } from 'src/shared/util/time';
 
+/**
+ * Called when the extension is first installed or synced onto a new machine
+ */
 export default async function onInstall() {
     // set the uninstall url
     chrome.runtime.setUninstallURL('https://www.google.com');
@@ -12,7 +14,10 @@ export default async function onInstall() {
             installed: true,
         }),
 
-        LocalStorage.initialize({}),
+        LocalStorage.initialize({
+            extensionReloadingEnabled: true,
+            tabReloadingEnabled: true,
+        }),
 
         SessionStorage.initialize({}),
     ]);

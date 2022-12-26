@@ -72,7 +72,7 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
             path: outDirectory,
             pathinfo: mode === 'development',
             filename: 'static/js/[name].js',
-            publicPath: path.resolve(),
+            publicPath: '/',
             // this is for windows support (which uses backslashes in paths)
             devtoolModuleFilenameTemplate: info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
             // this is to make sure that the global chunk loading function name is unique

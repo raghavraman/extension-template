@@ -37,6 +37,8 @@ chrome.runtime.onMessage.addListener((message: Message<BACKGROUND_MESSAGES>, sen
     const { name } = message;
     const handler = backgroundHandlers[name];
     if (handler) {
+        console.log('chrome.runtime.onMessage.addListener -> handler', handler);
+        console.log(`%c[background] ${name}`, 'color: white; background-color: blue;');
         try {
             handler({ data: message.data, sendResponse, sender });
         } catch (error) {

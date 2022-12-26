@@ -1,4 +1,4 @@
-import { Store } from '..';
+import { Store } from './Store';
 
 /**
  * chrome.session.storage is a temporary storage area that is cleared when the browser is closed.
