@@ -1,11 +1,11 @@
-import { LocalStorage } from 'src/shared/storage';
+import { devStore } from 'src/shared/storage/devStore';
 
 /**
  * Open the debug tab as the first tab
  */
 export async function openDebugTab() {
     if (process.env.NODE_ENV === 'development') {
-        const debugTabId = await LocalStorage.get('debugTabId');
+        const debugTabId = await devStore.getDebugTabId();
 
         const isAlreadyOpen = await (await chrome.tabs.query({})).some(tab => tab.id === debugTabId);
         if (isAlreadyOpen) return;
@@ -17,6 +17,6 @@ export async function openDebugTab() {
             index: 0,
         });
 
-        await LocalStorage.set('debugTabId', tab.id);
+        await devStore.setDebugTabId(tab.id);
     }
 }

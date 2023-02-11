@@ -1,5 +1,3 @@
-import { MessageDefinition } from '../types';
-
-export default interface HotReloadingMessages extends MessageDefinition {
+export default interface HotReloadingMessages {
     reloadExtension: () => void;
 }

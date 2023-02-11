@@ -1,10 +1,10 @@
 import React from 'react';
-import { backgroundMessenger } from 'src/shared/messages';
+import { bMessenger } from 'src/shared/messages';
 import styles from './Button.module.scss';
 
 export function Button(): JSX.Element {
     const handleOpenUrl = (url: string) => () => {
-        backgroundMessenger.openNewTab({ url });
+        bMessenger.openNewTab({ url });
     };
 
     return (

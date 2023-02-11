@@ -1,5 +1,5 @@
+import { MessageHandler } from 'chrome-extension-toolkit';
 import TabManagementMessages from 'src/shared/messages/TabManagementMessages';
-import { MessageHandler } from 'src/shared/types';
 
 const tabManagementHandler: MessageHandler<TabManagementMessages> = {
     getTabId({ sendResponse, sender }) {

@@ -1,18 +1,18 @@
 import HotReloadingMessages from 'src/shared/messages/HotReloadingMessages';
-import { LocalStorage } from 'src/shared/storage';
-import { MessageHandler } from 'src/shared/types';
+import { MessageHandler } from 'chrome-extension-toolkit';
+import { devStore } from 'src/shared/storage/devStore';
 
 const hotReloadingHandler: MessageHandler<HotReloadingMessages> = {
     async reloadExtension({ sendResponse }) {
-        const isExtensionReloading = await LocalStorage.get('extensionReloadingEnabled');
+        const isExtensionReloading = await devStore.getIsExtensionReloading();
         if (!isExtensionReloading) return sendResponse();
 
-        const isTabReloading = await LocalStorage.get('tabReloadingEnabled');
+        const isTabReloading = await devStore.getIsExtensionReloading();
         if (isTabReloading) {
             const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
             const tabToReload = tabs[0];
 
-            await LocalStorage.set('reloadTabId', tabToReload?.id);
+            await devStore.setReloadTabId(tabToReload?.id);
         }
         chrome.runtime.reload();
     },

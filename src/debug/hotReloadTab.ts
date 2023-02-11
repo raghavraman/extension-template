@@ -1,4 +1,4 @@
-import { LocalStorage } from 'src/shared/storage';
+import { devStore } from 'src/shared/storage/devStore';
 
 /**
  * A list of websites that we don't want to reload when the extension reloads (becuase it'd be hella annoying)
@@ -24,15 +24,12 @@ const HOT_RELOADING_WHITELIST = [
  * @returns a promise that resolves when the tab is reloaded
  */
 export async function hotReloadTab(): Promise<void> {
-    const [isTabReloading, reloadTabId] = await Promise.all([
-        LocalStorage.get('tabReloadingEnabled'),
-        LocalStorage.get('reloadTabId'),
-    ]);
+    const [isTabReloading, reloadTabId] = await Promise.all([devStore.getIsTabReloading(), devStore.getReloadTabId()]);
     if (!isTabReloading || !reloadTabId) return;
 
     chrome.tabs.get(reloadTabId, tab => {
         if (!tab?.id) {
-            return LocalStorage.set('reloadTabId', undefined);
+            return devStore.getReloadTabId();
         }
 
         if (!HOT_RELOADING_WHITELIST.find(url => tab.url?.includes(url))) {

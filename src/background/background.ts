@@ -1,13 +1,15 @@
+import { MessageListener } from 'chrome-extension-toolkit';
 import { BACKGROUND_MESSAGES } from 'src/shared/messages';
-import { SessionStorage } from 'src/shared/storage';
-import { Message } from 'src/shared/types';
 import { generateRandomId } from 'src/shared/util/random';
 import onHistoryStateUpdated from './events/onHistoryStateUpdated';
 import onInstall from './events/onInstall';
 import onNewChromeSession from './events/onNewChromeSession';
 import onServiceWorkerAlive from './events/onServiceWorkerAlive';
 import onUpdate from './events/onUpdate';
-import { backgroundHandlers } from './handler';
+import { sessionStore } from '../shared/storage/sessionStore';
+import browserActionHandler from './handler/browserActionHandler';
+import hotReloadingHandler from './handler/hotReloadingHandler';
+import tabManagementHandler from './handler/tabManagementHandler';
 
 onServiceWorkerAlive();
 
@@ -31,26 +33,18 @@ chrome.runtime.onInstalled.addListener(details => {
 // This event is fired when any tab's url changes.
 chrome.webNavigation.onHistoryStateUpdated.addListener(onHistoryStateUpdated);
 
-// listen for messages to the background script
-chrome.runtime.onMessage.addListener((message: Message<BACKGROUND_MESSAGES>, sender, sendResponse) => {
-    if (message.to !== 'BACKGROUND') return;
-    const { name } = message;
-    const handler = backgroundHandlers[name];
-    if (handler) {
-        console.log('chrome.runtime.onMessage.addListener -> handler', handler);
-        console.log(`%c[background] ${name}`, 'color: white; background-color: blue;');
-        try {
-            handler({ data: message.data, sendResponse, sender });
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    return true;
+// initialize the message listener that will listen for messages from the content script
+const messageListener = new MessageListener<BACKGROUND_MESSAGES>({
+    ...browserActionHandler,
+    ...hotReloadingHandler,
+    ...tabManagementHandler,
 });
 
-SessionStorage.get('chromeSessionId').then(async sessionId => {
-    if (!sessionId) {
-        await SessionStorage.set('chromeSessionId', generateRandomId(10));
+messageListener.listen();
+
+sessionStore.getChromeSessionId().then(async chromeSessionId => {
+    if (!chromeSessionId) {
+        await sessionStore.setChromeSessionId(generateRandomId(10));
         onNewChromeSession();
     }
 });

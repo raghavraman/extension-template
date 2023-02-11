@@ -1,9 +1,7 @@
-import { MessageDefinition } from '../types';
-
 /**
  * Messages for managing the user's open tabs list
  */
-export default interface TabManagementMessages extends MessageDefinition {
+export default interface TabManagementMessages {
     /**
      * Opens a new tab with the given URL
      * @param data The URL to open
