@@ -8,6 +8,7 @@ export const sessionStore = createStore<ISessionStore>(
     {
         chromeSessionId: undefined,
     },
-    undefined,
-    'session'
+    {
+        area: 'session',
+    }
 );

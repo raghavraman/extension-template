@@ -1,3 +1,9 @@
 # TODO
 
--   add a typechecker to the production build, or maybe make it so that we wait until typechecking is done before we say that the build is done
+✅ encryption
+
+-   dev dashboard
+-   debug modules
+-   e2e testing
+-   add shadow dom stuff to library
+-   add tailwindcss
