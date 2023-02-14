@@ -14,9 +14,15 @@ interface IDevStore {
     reloadTabId?: number;
 }
 
-export const devStore = createStore<IDevStore>({
-    debugTabId: undefined,
-    isTabReloading: true,
-    isExtensionReloading: true,
-    reloadTabId: undefined,
-});
+export const devStore = createStore<IDevStore>(
+    'DEV_STORE',
+    {
+        debugTabId: undefined,
+        isTabReloading: true,
+        isExtensionReloading: true,
+        reloadTabId: undefined,
+    },
+    {   
+        isEncrypted: true,
+    }
+);

@@ -5,6 +5,7 @@ interface ISessionStore {
 }
 
 export const sessionStore = createStore<ISessionStore>(
+    'SESSION_STORE',
     {
         chromeSessionId: undefined,
     },
