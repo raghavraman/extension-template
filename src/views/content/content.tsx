@@ -11,7 +11,7 @@ document.body.appendChild(root);
 
 console.log('content script');
 
-bMessenger.getTabId(undefined).then(tabId => {
+bMessenger.getTabId().then(tabId => {
     console.log('tabId', tabId);
 });
 

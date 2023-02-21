@@ -27,7 +27,7 @@ socket.on('reload', async () => {
     console.log('%c[hot-reloading] reloading...', 'color:white; background-color: orange;');
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
         if (tabs?.[0]?.id) {
-            bMessenger.reloadExtension(undefined);
+            bMessenger.reloadExtension();
         }
     });
 });
