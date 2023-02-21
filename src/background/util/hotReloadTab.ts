@@ -24,14 +24,14 @@ const HOT_RELOADING_WHITELIST = [
  * @returns a promise that resolves when the tab is reloaded
  */
 export async function hotReloadTab(): Promise<void> {
-    const [isTabReloading, reloadTabId] = await Promise.all([devStore.getIsTabReloading(), devStore.getReloadTabId()]);
+    const { getIsTabReloading, getReloadTabId } = devStore;
+
+    const [isTabReloading, reloadTabId] = await Promise.all([getIsTabReloading(), getReloadTabId()]);
+
     if (!isTabReloading || !reloadTabId) return;
 
     chrome.tabs.get(reloadTabId, tab => {
-        if (!tab?.id) {
-            return devStore.getReloadTabId();
-        }
-
+        if (!tab?.id) return;
         if (!HOT_RELOADING_WHITELIST.find(url => tab.url?.includes(url))) {
             chrome.tabs.reload(tab.id);
         }

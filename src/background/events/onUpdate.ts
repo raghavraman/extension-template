@@ -1,4 +1,4 @@
-import { hotReloadTab } from 'src/debug/hotReloadTab';
+import { hotReloadTab } from 'src/background/util/hotReloadTab';
 
 /**
  * Called when the extension is updated (or when the extension is reloaded in development mode)

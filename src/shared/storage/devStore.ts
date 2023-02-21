@@ -6,6 +6,8 @@ import { createStore } from 'chrome-extension-toolkit';
 interface IDevStore {
     /** the tabId for the debug tab */
     debugTabId?: number;
+    /** whether the debug tab is visible */
+    wasDebugTabVisible?: boolean;
     /** whether we should enable extension reloading */
     isExtensionReloading?: boolean;
     /** whether we should enable tab reloading */
@@ -14,15 +16,10 @@ interface IDevStore {
     reloadTabId?: number;
 }
 
-export const devStore = createStore<IDevStore>(
-    'DEV_STORE',
-    {
-        debugTabId: undefined,
-        isTabReloading: true,
-        isExtensionReloading: true,
-        reloadTabId: undefined,
-    },
-    {   
-        isEncrypted: true,
-    }
-);
+export const devStore = createStore<IDevStore>('DEV_STORE', {
+    debugTabId: undefined,
+    isTabReloading: true,
+    wasDebugTabVisible: false,
+    isExtensionReloading: true,
+    reloadTabId: undefined,
+});
