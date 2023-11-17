@@ -1,7 +1,6 @@
 import path from 'path';
 import dotenv from 'dotenv';
 import webpack, { WebpackPluginInstance } from 'webpack';
-import { EntryId } from 'webpack/webpack.config';
 import CreateFileWebpack from 'create-file-webpack';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
@@ -15,11 +14,15 @@ import TypeErrorNotifierPlugin from './custom/TypeErrorNotifierPlugin';
 /**
  *  Gets the plugins that are used in the build process
  * @param mode the environment that the build is running in
- * @param htmlEntries the entry points that need an html file
+ * @param entries the entry points that need an html file
  * @param manifest the manifest.json file
  * @returns an array of webpack plugins
  */
-export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manifest: chrome.runtime.ManifestV3) {
+export function getBuildPlugins(
+    mode: Environment,
+    entries: Record<string, ExtensionEntry>,
+    manifest: chrome.runtime.ManifestV3
+) {
     let plugins: WebpackPluginInstance[] = [];
 
     // show the progress of the build
@@ -38,19 +41,19 @@ export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manif
         })
     );
 
-    // create an html file for each entry point that needs one
-    for (const entryId of htmlEntries) {
-        // if (!entries[entryId]) return;
-        plugins.push(
-            new HTMLWebpackPlugin({
-                hash: false,
-                filename: `${entryId}.html`,
-                chunks: [entryId],
-                title: `${entryId} `,
-                template: path.resolve('webpack', 'plugins', 'template.html'),
-            })
-        );
-    }
+    Object.entries(entries).forEach(([entryId, entry]) => {
+        if (entry.generateHTML) {
+            plugins.push(
+                new HTMLWebpackPlugin({
+                    hash: false,
+                    filename: `${entryId}.html`,
+                    chunks: [entryId],
+                    title: `${entryId} `,
+                    template: path.resolve('webpack', 'plugins', 'template.html'),
+                })
+            );
+        }
+    });
 
     // write the manifest.json file to the build directory
     plugins.push(

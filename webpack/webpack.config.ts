@@ -5,15 +5,29 @@ import { moduleResolutionPlugins } from './plugins/moduleResolutionPlugins';
 import loaders from './loaders';
 import { getBuildPlugins } from './plugins/buildProcessPlugins';
 
-export interface Entries {
-    content: string[];
-    background: string[];
-    popup: string[];
-    // only used in development
-    debug?: string[];
-}
-
-export type EntryId = keyof Entries;
+const ALL_ENTRIES = {
+    content: {
+        path: [path.resolve('src/views')],
+        mode: ['production', 'development'],
+        addDevtools: true,
+    },
+    background: {
+        path: [path.resolve('src/background/background.ts')],
+        mode: ['production', 'development'],
+    },
+    popup: {
+        path: [path.resolve('src/views')],
+        mode: ['production', 'development'],
+        generateHTML: true,
+        addDevtools: true,
+    },
+    debugPage: {
+        path: [path.resolve('src/debug')],
+        mode: ['development'],
+        generateHTML: true,
+        addDevtools: true,
+    },
+} satisfies Record<string, ExtensionEntry>;
 
 /**
  * This function will generate the webpack configuration for the extension
@@ -24,26 +38,17 @@ export type EntryId = keyof Entries;
 export default function config(mode: Environment, manifest: chrome.runtime.ManifestV3): Configuration {
     const outDirectory = path.resolve('build');
 
-    // the entry points for the extension (the files that webpack will start bundling from)
-    const entry: Entries = {
-        content: [path.resolve('src', 'views')],
-        popup: [path.resolve('src', 'views')],
-        background: [path.resolve('src', 'background', 'background')],
-    };
-
-    // the entries that need an html file to be generated
-    const htmlEntries: EntryId[] = ['popup'];
-
-    if (mode === 'development') {
-        // create an html file for the debug entry
-        htmlEntries.push('debug');
-        // TODO: add hot reloading script to the debug entry
-        entry.debug = [path.resolve('src', 'debug')];
-
-        // we need to import react-devtools before the react code in development so that it can hook into react
-        entry.content = [path.resolve('src', 'debug', 'reactDevtools'), ...entry.content];
-        entry.popup = [path.resolve('src', 'debug', 'reactDevtools'), ...entry.popup];
-    }
+    const ENTRIES_TO_BUILD = Object.keys(ALL_ENTRIES)
+        .filter(entryId => ALL_ENTRIES[entryId].mode.includes(mode))
+        .reduce((acc: Partial<typeof ALL_ENTRIES>, entryId) => {
+            const entry = ALL_ENTRIES[entryId] as ExtensionEntry;
+            if (entry.addDevtools) {
+                // add react-devtools to the beginning of the js path (so it loads before react)
+                entry.path.unshift(path.resolve('src/debug/reactDevtools'));
+            }
+            acc[entryId] = entry;
+            return acc;
+        }, {});
 
     /** @see https://webpack.js.org/configuration for documentation */
     const config: Configuration = {
@@ -52,7 +57,11 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
         bail: true,
         cache: true,
         // entry and resolve is what webpack uses for figuring out where to start bundling and how to resolve modules
-        entry: entry as unknown as EntryObject,
+        entry: Object.keys(ENTRIES_TO_BUILD).reduce((acc: EntryObject, entryId) => {
+            const entry = ENTRIES_TO_BUILD[entryId] as ExtensionEntry;
+            acc[entryId] = entry.path;
+            return acc;
+        }, {}),
         resolve: {
             modules: ['node_modules'],
             extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -87,7 +96,7 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
             errorsCount: true,
         },
         // this is where we define the plugins that webpack will use
-        plugins: getBuildPlugins(mode, htmlEntries, manifest),
+        plugins: getBuildPlugins(mode, ENTRIES_TO_BUILD, manifest),
     };
 
     if (mode === 'production') {

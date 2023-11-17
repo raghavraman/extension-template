@@ -15,6 +15,20 @@ declare global {
     }
 
     type Environment = typeof process.env.NODE_ENV;
+
+    /**
+     * An object representing configuration for adding a new file to be built for the extension
+     */
+    export type ExtensionEntry = {
+        /** paths to the JS/TS files to be built for this entry */
+        path: string[];
+        /** whether or not to generate an HTML file for this entry */
+        generateHTML?: boolean;
+        /** whether or not to add the react devtools to the beginning of the path */
+        addDevtools?: boolean;
+        /** the environments that this entry should be built for */
+        mode: Environment[];
+    };
 }
 
 // If this file has no import/export statements (i.e. is a script)
