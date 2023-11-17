@@ -1,14 +1,6 @@
-const NAME = 'sriram-chrome-extension';
+const NAME = 'Sriram Chrome Extension';
 const SHORT_NAME = 'sriram-chrome-extension';
-const DESCRIPTION = 'Improves the course registration process at the University of Texas at Austin!';
-
-const HOST_PERMISSIONS: string[] = [
-    '*://*.utdirect.utexas.edu/apps/registrar/course_schedule/*',
-    '*://*.utexas.collegescheduler.com/*',
-    '*://*.catalog.utexas.edu/ribbit/',
-    '*://*.registrar.utexas.edu/schedules/*',
-    '*://*.login.utexas.edu/login/*',
-];
+const DESCRIPTION = 'My Extension Description';
 
 /**
  * Creates a chrome extension manifest from the given version, mode, and
@@ -18,11 +10,6 @@ const HOST_PERMISSIONS: string[] = [
  */
 export function getManifest(mode: Environment, version: string): chrome.runtime.ManifestV3 {
     let name = mode === 'development' ? `${NAME} (dev)` : NAME;
-
-    if (mode === 'development') {
-        HOST_PERMISSIONS.push('http://localhost:9090/*');
-    }
-
     const manifest = {
         name,
         short_name: SHORT_NAME,
@@ -31,14 +18,23 @@ export function getManifest(mode: Environment, version: string): chrome.runtime.
         manifest_version: 3,
         // hardcode the key for development builds
         key: process.env.MANIFEST_KEY,
-        host_permissions: HOST_PERMISSIONS,
-        permissions: ['storage', 'unlimitedStorage', 'background'],
+        host_permissions: ['http://*/*', 'https://*/*'],
+        permissions: [
+            'storage',
+            'unlimitedStorage',
+            'background',
+            'webNavigation',
+            'webRequest',
+            'declarativeNetRequest',
+            'alarms',
+            'offscreen',
+        ],
         background: {
             service_worker: 'static/js/background.js',
         },
         content_scripts: [
             {
-                matches: HOST_PERMISSIONS,
+                matches: ['http://*/*', 'https://*/*'],
                 css: ['/static/css/content.css'],
                 js: ['/static/js/content.js'],
             },
