@@ -14,7 +14,7 @@ export async function openDebugTab() {
         if (isAlreadyOpen) return;
 
         const tab = await chrome.tabs.create({
-            url: chrome.runtime.getURL('debug.html'),
+            url: chrome.runtime.getURL('debugPage.html'),
             active: wasDebugTabVisible,
             pinned: true,
             index: 0,
