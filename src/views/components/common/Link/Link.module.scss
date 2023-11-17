@@ -1,0 +1,11 @@
+.link {
+    font-family: 'Inter', sans-serif;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.disabled {
+    cursor: not-allowed !important;
+    text-decoration: none !important;
+    color: #999999 !important;
+}

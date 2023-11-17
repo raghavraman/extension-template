@@ -1,7 +1,6 @@
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import path from 'path';
-import { Server } from 'socket.io';
 import config from './webpack.config';
 import { version } from '../package.json';
 import { getManifest } from './manifest.config';

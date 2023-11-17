@@ -1,12 +1,14 @@
-An Opinionated Chrome Extension Boilerplate with
+# sriram's mv3 chrome extension template
+
+## Built Using:
 
 -   React 18
--   Typescript
+-   TypeScript
 -   Webpack 5 (esbuild-loader)
--   Eslint
+-   ESLint
 -   Prettier
 -   Semantic-Release
--   Custom Messaging & Storage wrappers
+-   Custom Messaging & Storage Wrappers with full automatic TypeScript support!
 
 ## Getting Started
 

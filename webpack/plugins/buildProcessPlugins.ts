@@ -9,6 +9,7 @@ import WebpackBuildNotifierPlugin from 'webpack-build-notifier';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import TypeErrorNotifierPlugin from './custom/TypeErrorNotifierPlugin';
 
 /**
@@ -27,6 +28,8 @@ export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manif
     // make sure that the paths are case sensitive
     plugins.push(new CaseSensitivePathsPlugin());
 
+    plugins.push(new CleanWebpackPlugin());
+
     // specify how the outputed css files should be named
     plugins.push(
         new MiniCssExtractPlugin({
@@ -43,7 +46,7 @@ export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manif
                 hash: false,
                 filename: `${entryId}.html`,
                 chunks: [entryId],
-                title: `${manifest.short_name} ${entryId} `,
+                title: `${entryId} `,
                 template: path.resolve('webpack', 'plugins', 'template.html'),
             })
         );
@@ -64,7 +67,7 @@ export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manif
             patterns: [
                 {
                     from: path.resolve('public'),
-                    filter: path => (path.includes('icons') ? path.includes(mode) : true),
+                    filter: path => (path.includes('icons/icon') ? path.includes(mode) : true),
                 },
             ],
         })
@@ -84,6 +87,7 @@ export function getBuildPlugins(mode: Environment, htmlEntries: EntryId[], manif
                 title: `${manifest.short_name} v${manifest.version} ${mode}`,
                 logo: path.resolve('public', 'icons', 'icon_production_128.png'),
                 failureSound: 'Ping',
+                successSound: false,
                 showDuration: true,
                 suppressWarning: true,
             })

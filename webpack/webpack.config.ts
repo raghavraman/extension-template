@@ -26,21 +26,23 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
 
     // the entry points for the extension (the files that webpack will start bundling from)
     const entry: Entries = {
-        content: [path.resolve('src', 'views', 'content', 'content')],
+        content: [path.resolve('src', 'views')],
+        popup: [path.resolve('src', 'views')],
         background: [path.resolve('src', 'background', 'background')],
-        popup: [path.resolve('src', 'views', 'popup', 'popup')],
     };
 
     // the entries that need an html file to be generated
-    const htmlEntries: EntryId[] = mode === 'development' ? ['popup', 'debug'] : ['popup'];
+    const htmlEntries: EntryId[] = ['popup'];
 
     if (mode === 'development') {
+        // create an html file for the debug entry
+        htmlEntries.push('debug');
         // TODO: add hot reloading script to the debug entry
         entry.debug = [path.resolve('src', 'debug')];
 
-        // we need to import react-devtools before the react code in development
-        entry.content = [path.resolve('src', 'views', 'reactDevtools'), ...entry.content];
-        entry.popup = [path.resolve('src', 'views', 'reactDevtools'), ...entry.popup];
+        // we need to import react-devtools before the react code in development so that it can hook into react
+        entry.content = [path.resolve('src', 'debug', 'reactDevtools'), ...entry.content];
+        entry.popup = [path.resolve('src', 'debug', 'reactDevtools'), ...entry.popup];
     }
 
     /** @see https://webpack.js.org/configuration for documentation */
@@ -60,6 +62,7 @@ export default function config(mode: Environment, manifest: chrome.runtime.Manif
                 crypto: 'crypto-browserify',
                 stream: 'stream-browserify',
                 buffer: 'buffer',
+                fs: false,
             },
         },
         // this is where we define the loaders for different file types

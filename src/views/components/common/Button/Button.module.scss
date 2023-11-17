@@ -1,0 +1,79 @@
+@import 'src/views/styles/base.module.scss';
+
+.button {
+    background-color: #000;
+    color: #fff;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.4) 2px 2px 4px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-family: 'Inter';
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-color: #fff;
+        color: #000;
+    }
+
+    &:active {
+        animation: click_animation 0.2s ease-in-out;
+    }
+
+    &.disabled {
+        cursor: not-allowed !important;
+        opacity: 0.5 !important;
+
+        &:active {
+            animation: none !important;
+        }
+    }
+
+    @each $color,
+        $value
+            in (
+                primary: $burnt_orange,
+                secondary: $charcoal,
+                tertiary: $bluebonnet,
+                danger: $speedway_brick,
+                warning: $tangerine,
+                success: $turtle_pond,
+                info: $turquoise
+            )
+    {
+        &.#{$color} {
+            background-color: $value;
+            color: #fff;
+
+            &:hover {
+                background-color: lighten($value, 10%);
+            }
+
+            &:focus,
+            &:active {
+                background-color: darken($value, 10%);
+            }
+
+            &.disabled {
+                background-color: $value !important;
+            }
+        }
+    }
+}
+
+@keyframes click_animation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
