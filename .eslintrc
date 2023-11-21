@@ -178,13 +178,13 @@
                 "zones": [
                     {
                         "target": "./src/background",
-                        "from": "./src/views",
-                        "message": "You cannot import into the `background` directory from the `views` directory (i.e. content script files) because it will break the build!"
+                        "from": "./src/foreground",
+                        "message": "You cannot import into the `background` directory from the `foreground` directory (i.e. content script files) because it will break the build!"
                     },
                     {
-                        "target": "./src/views",
+                        "target": "./src/foreground",
                         "from": "./src/background",
-                        "message": "You cannot import into the `views` directory from the `background` directory (i.e. background script files) because it will break the build!"
+                        "message": "You cannot import into the `foreground` directory from the `background` directory (i.e. background script files) because it will break the build!"
                     },
                     {
                         "target": "./src/shared",

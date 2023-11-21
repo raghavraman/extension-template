@@ -7,7 +7,7 @@ import { getBuildPlugins } from './plugins/buildProcessPlugins';
 
 const ALL_ENTRIES = {
     content: {
-        path: [path.resolve('src/views')],
+        path: [path.resolve('src/foreground')],
         mode: ['production', 'development'],
         addDevtools: true,
     },
@@ -16,7 +16,7 @@ const ALL_ENTRIES = {
         mode: ['production', 'development'],
     },
     popup: {
-        path: [path.resolve('src/views')],
+        path: [path.resolve('src/foreground')],
         mode: ['production', 'development'],
         generateHTML: true,
         addDevtools: true,

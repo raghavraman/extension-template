@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { PropsWithChildren } from 'react';
-import colors, { Color } from 'src/views/styles/colors.module.scss';
-import fonts, { Size, Weight } from 'src/views/styles/fonts.module.scss';
+import colors, { Color } from 'src/foreground/styles/colors.module.scss';
+import fonts, { Size, Weight } from 'src/foreground/styles/fonts.module.scss';
 import styles from './Text.module.scss';
 
 export type TextProps = {

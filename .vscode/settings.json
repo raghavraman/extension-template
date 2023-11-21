@@ -20,6 +20,7 @@
     "material-icon-theme.folders.associations": {
         "analytics": "Json",
         "background": "Delta",
+        "foreground": "views",
         "navigation": "Routes",
         "logging": "log",
         "popup": "Layout",
