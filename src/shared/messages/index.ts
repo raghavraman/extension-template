@@ -1,5 +1,5 @@
 import { createMessenger } from 'chrome-extension-toolkit';
-import TAB_MESSAGES from './TabMessages';
+import FOREGROUND_MESSAGES from './ForegroundMessages';
 import BrowserActionMessages from './BrowserActionMessages';
 import HotReloadingMessages from './HotReloadingMessages';
 import TabManagementMessages from './TabManagementMessages';
@@ -15,6 +15,6 @@ export type BACKGROUND_MESSAGES = BrowserActionMessages & TabManagementMessages 
 export const background = createMessenger<BACKGROUND_MESSAGES>('background');
 
 /**
- * A utility object that can be used to send type-safe messages to specific tabs
+ * A utility object that can be used to send type-safe messages to the foreground
  */
-export const tabs = createMessenger<TAB_MESSAGES>('tab');
+export const tabs = createMessenger<FOREGROUND_MESSAGES>('foreground');
